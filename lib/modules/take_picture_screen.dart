@@ -20,13 +20,15 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
   AssetPathEntity? selectedAlbum;
   List<AssetEntity>? _galleryAssets;
   String? resultText;
+  Map<String,String>? resultMap;
   @override
   void initState() {
     super.initState();
     const QuickActions quickActions = QuickActions();
-    quickActions.initialize((String shortcutType) {
+    quickActions.initialize((String shortcutType) async {
       if (shortcutType == 'action_one') {
-        getFirstPicture();
+       await getFirstPicture();
+       await processImage(pickedPhotoPath);
       }
     });
     quickActions.setShortcutItems(<ShortcutItem>[
@@ -65,12 +67,16 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
   Future<void> processImage(String? imgPath) async {
     if(imgPath != null){
     var text =
-        await FlutterTesseractOcr.extractText(imgPath, language: 'vie', args: {
+        await FlutterTesseractOcr.extractText(imgPath, language: 'eng', args: {
       "preserve_interword_spaces": "1",
     });
     setState(() {
       resultText = text;
+      resultMap = {
+        'key' : text
+      };
     });
+    print(resultMap);
   } else {
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text("Please choose a image"),
@@ -81,6 +87,7 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
   setState(() {
     pickedPhotoPath = null;
     resultText ='';
+    resultMap = null;
   });
   }
 
@@ -165,7 +172,7 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
               style: ElevatedButton.styleFrom(),
               onPressed: ()=>cancelProcess(),
               child: const Text(
-                'Cancel',
+                'Clear',
                 style: TextStyle(fontSize: 14),
               ),
             ),
