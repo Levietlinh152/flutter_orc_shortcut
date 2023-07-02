@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_siri_suggestions/flutter_siri_suggestions.dart';
 import 'package:flutter_tesseract_ocr/android_ios.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:photo_manager/photo_manager.dart';
@@ -21,9 +22,12 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
   List<AssetEntity>? _galleryAssets;
   String? resultText;
   Map<String,String>? resultMap;
+  String _text = 'added mainActivity, beerActivity suggestions 🙋‍♂️';
+
   @override
   void initState() {
     super.initState();
+    initSuggestions();
     const QuickActions quickActions = QuickActions();
     quickActions.initialize((String shortcutType) async {
       if (shortcutType == 'action_one') {
@@ -39,6 +43,35 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
       ),
     ]);
     // _requestAssets();
+  }
+  void initSuggestions() async {
+    FlutterSiriSuggestions.instance.configure(
+        onLaunch: (Map<String, dynamic> message) async {
+      debugPrint('[FlutterSiriSuggestions] [onLaunch] $message');
+      setState(() async {
+        await getFirstPicture();
+       await processImage(pickedPhotoPath);
+      });
+    });
+
+    await FlutterSiriSuggestions.instance.registerActivity(
+        const FlutterSiriActivity("Process First Image", "mainActivity",
+            isEligibleForSearch: true,
+            isEligibleForPrediction: true,
+            contentDescription: "Process First Image",
+            suggestedInvocationPhrase: "open my app",
+            userInfo: {"info": "sample"}));
+
+
+    // await FlutterSiriSuggestions.instance
+    //     .registerActivity(const FlutterSiriActivity(
+    //   "beerActivity Suggestion",
+    //   "beerActivity",
+    //   isEligibleForSearch: true,
+    //   isEligibleForPrediction: true,
+    //   contentDescription: "Open beerActivity 🍺",
+    //   suggestedInvocationPhrase: "coooooool",
+    // ));
   }
 
   Future<void> getFirstPicture() async {

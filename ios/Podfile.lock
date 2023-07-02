@@ -1,5 +1,7 @@
 PODS:
   - Flutter (1.0.0)
+  - flutter_siri_suggestions (0.0.1):
+    - Flutter
   - flutter_tesseract_ocr (0.3.4):
     - Flutter
     - SwiftyTesseract
@@ -17,6 +19,7 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - flutter_siri_suggestions (from `.symlinks/plugins/flutter_siri_suggestions/ios`)
   - flutter_tesseract_ocr (from `.symlinks/plugins/flutter_tesseract_ocr/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
@@ -30,6 +33,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  flutter_siri_suggestions:
+    :path: ".symlinks/plugins/flutter_siri_suggestions/ios"
   flutter_tesseract_ocr:
     :path: ".symlinks/plugins/flutter_tesseract_ocr/ios"
   image_picker_ios:
@@ -43,6 +48,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  flutter_siri_suggestions: 226fb7ef33d25d3fe0d4aa2a8bcf4b72730c466f
   flutter_tesseract_ocr: fc88408db7c5657aec3a7fc3659abfcd2ddac544
   image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
   path_provider_foundation: eaf5b3e458fc0e5fbb9940fb09980e853fe058b8
