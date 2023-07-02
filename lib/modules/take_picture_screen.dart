@@ -22,12 +22,12 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
   List<AssetEntity>? _galleryAssets;
   String? resultText;
   Map<String,String>? resultMap;
-  String _text = 'added mainActivity, beerActivity suggestions 🙋‍♂️';
 
   @override
   void initState() {
     super.initState();
-    initSuggestions();
+    initSuggestions(); // addd short cut for ios 
+    //
     const QuickActions quickActions = QuickActions();
     quickActions.initialize((String shortcutType) async {
       if (shortcutType == 'action_one') {
@@ -44,6 +44,7 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
     ]);
     // _requestAssets();
   }
+  
   void initSuggestions() async {
     FlutterSiriSuggestions.instance.configure(
         onLaunch: (Map<String, dynamic> message) async {
@@ -61,17 +62,6 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
             contentDescription: "Process First Image",
             suggestedInvocationPhrase: "open my app",
             userInfo: {"info": "sample"}));
-
-
-    // await FlutterSiriSuggestions.instance
-    //     .registerActivity(const FlutterSiriActivity(
-    //   "beerActivity Suggestion",
-    //   "beerActivity",
-    //   isEligibleForSearch: true,
-    //   isEligibleForPrediction: true,
-    //   contentDescription: "Open beerActivity 🍺",
-    //   suggestedInvocationPhrase: "coooooool",
-    // ));
   }
 
   Future<void> getFirstPicture() async {
